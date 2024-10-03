@@ -1,0 +1,21 @@
+type Commentary {
+  commentarty_id: ID!
+  user_id: ID!
+  topic: String!
+  content: String!
+  count_likes: Int!
+  theme_id: ID!
+  timestamp: String!
+  message_type: Boolean!
+  reply_message_id: ID
+  tag_id: ID
+}
+
+type Query {
+  commentaries: [Commentary!]!
+}
+
+type Mutation {
+  addLike(commentarty_id: Int!): Commentary!
+  removeLike(commentarty_id: Int!): Commentary!
+}

@@ -1,0 +1,162 @@
+<wsdl:definitions name="CommentaryService" targetNamespace="http://www.itforum.com/CommentaryService/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.itforum.com/CommentaryService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <wsdl:documentation></wsdl:documentation>
+   <wsdl:types>
+      <xsd:schema targetNamespace="http://www.itforum.com/CommentaryService/">
+         <xsd:element name="Commentary">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="commentary_id" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="participant_id" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="topic" type="xsd:string"/>
+                  <xsd:element name="content" type="xsd:string"/>
+                  <xsd:element name="count_likes" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="theme_id" type="xsd:integer" minOccurs="1" maxOccurs="1"/>
+                  <xsd:element name="timestamp" type="xsd:dateTime"/>
+                  <xsd:element name="commentary_type" type="xsd:boolean"/>
+                  <xsd:element name="reply_commentary_id" type="xsd:integer" minOccurs="0"/>
+                  <xsd:element name="tag_id" type="xsd:integer" minOccurs="0"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="Commentaries">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element ref="tns:Commentary" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetThemeByCommentary">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element ref="tns:Commentary" minOccurs="0" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetThemeByCommentaryResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="theme_id" type="xsd:integer" minOccurs="0" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetAllCommentariesByTheme">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element name="theme_id" type="xsd:integer"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetAllCommentariesByThemeResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element ref="tns:Commentary" minOccurs="0" maxOccurs="unbounded"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="addAnswerToCommentary">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element ref="tns:Commentary" minOccurs="0" maxOccurs="1">
+                  </xsd:element>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="addAnswerToCommentaryResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element ref="tns:Commentary" minOccurs="0" maxOccurs="1"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+      </xsd:schema>
+   </wsdl:types>
+   <!--A wsdl `message` element is used to define a message
+
+      exchanged between a web service, consisting of zero
+
+      or more `part`s.-->
+   <wsdl:message name="GetThemeByCommentaryRequest">
+      <wsdl:part element="tns:GetThemeByCommentary" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="GetThemeByCommentaryResponse">
+      <wsdl:part element="tns:GetThemeByCommentaryResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="GetAllCommentariesByThemeRequest">
+      <wsdl:part name="parameters" element="tns:GetAllCommentariesByTheme"/>
+   </wsdl:message>
+   <wsdl:message name="GetAllCommentariesByThemeResponse">
+      <wsdl:part name="parameters" element="tns:GetAllCommentariesByThemeResponse"/>
+   </wsdl:message>
+   <wsdl:message name="addAnswerToCommentaryRequest">
+      <wsdl:part name="parameters" element="tns:addAnswerToCommentary"/>
+   </wsdl:message>
+   <wsdl:message name="addAnswerToCommentaryResponse">
+      <wsdl:part name="parameters" element="tns:addAnswerToCommentaryResponse"/>
+   </wsdl:message>
+   <!--A WSDL `portType` is used to combine multiple `message`s
+
+      (e.g. input, output) into a single operation.
+
+ 
+
+      Here we define three synchronous (input/output) operations
+
+      and the `message`s that must be used for each.-->
+   <wsdl:portType name="CommentaryService">
+      <wsdl:operation name="GetThemeByCommentary">
+         <wsdl:input message="tns:GetThemeByCommentaryRequest"/>
+         <wsdl:output message="tns:GetThemeByCommentaryResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCommentariesByTheme">
+         <wsdl:input message="tns:GetAllCommentariesByThemeRequest"/>
+         <wsdl:output message="tns:GetAllCommentariesByThemeResponse"/>
+      </wsdl:operation>
+      <wsdl:operation name="addAnswerToCommentary">
+         <wsdl:input message="tns:addAnswerToCommentaryRequest"/>
+         <wsdl:output message="tns:addAnswerToCommentaryResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <!--The `binding` element defines exactly how each
+
+      `operation` will take place over the network.
+
+      In this case, we are using SOAP.-->
+   <wsdl:binding name="CommentaryServiceSOAP" type="tns:CommentaryService">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="GetThemeByCommentary">
+         <soap:operation soapAction="http://www.itforum.com/BookService/GetThemeByCommentary"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="GetAllCommentariesByTheme">
+         <soap:operation soapAction="http://www.itforum.com/BookService/GetAllCommentariesByTheme"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+      <wsdl:operation name="addAnswerToCommentary">
+         <soap:operation soapAction="http://www.itforum.com/BookService/addAnswerToCommentary"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <!--The `service` element finally says where the service
+
+      can be accessed from - in other words, its endpoint.-->
+   <wsdl:service name="CommentaryService">
+      <wsdl:port binding="tns:CommentaryServiceSOAP" name="CommentaryServiceSOAP">
+         <soap:address location="http://www.example.org/CommentaryService"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
