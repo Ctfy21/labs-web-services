@@ -22,7 +22,7 @@ type database struct {
 
 func New() CommentaryRepository {
 
-	connStr := "postgres://postgres:123456@localhost/lab4_design_web_services?sslmode=disable"
+	connStr := "postgres://postgres:123456@localhost/lab4-web-services?sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 
 	if err != nil {
@@ -37,7 +37,7 @@ func New() CommentaryRepository {
 }
 
 func (db *database) AddLike(commentarty_id int) error {
-	_, err := db.client.Exec("UPDATE commentary SET count_likes = count_likes + 1 WHERE $1", commentarty_id)
+	_, err := db.client.Exec("UPDATE commentary SET count_likes = count_likes + 1 WHERE commentary_id = $1", commentarty_id)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func (db *database) AddLike(commentarty_id int) error {
 }
 
 func (db *database) RemoveLike(commentarty_id int) error {
-	_, err := db.client.Exec("UPDATE commentary SET count_likes = count_likes - 1 WHERE $1", commentarty_id)
+	_, err := db.client.Exec("UPDATE commentary SET count_likes = count_likes - 1 WHERE commentary_id = $1", commentarty_id)
 	if err != nil {
 		return err
 	}

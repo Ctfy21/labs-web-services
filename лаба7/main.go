@@ -55,9 +55,12 @@ func main() {
 	serverRegister := grpc.NewServer()
 	service := &myModeratorServer{}
 
+	log.Println("GRPC server on http://localhost:8089/")
+
 	proto.RegisterModeratorServer(serverRegister, service)
-	serverRegister.Serve(lis)
+	err = serverRegister.Serve(lis)
 	if err != nil {
 		log.Fatalf("impossible to serve: %s", err)
 	}
+
 }
